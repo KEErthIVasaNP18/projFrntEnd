@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, logoutUser } from '../../redux/authSlice';
 import { clearCart, setCart } from '../../redux/cartSlice';
 import { clearWishlist, setWishlist } from '../../redux/wishlistSlice';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './AuthPage.css';
 
 const AuthPage = () => {
@@ -20,6 +21,7 @@ const AuthPage = () => {
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
   const [otpSent, setOtpSent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Helper to get users from localStorage
   const getUsersDb = () => {
@@ -47,6 +49,7 @@ const AuthPage = () => {
     setMessage('Registration successful. Please log in.');
     setView('login');
     setPassword('');
+    setShowPassword(false);
   };
 
   const handleLogin = (e) => {
@@ -109,6 +112,7 @@ const AuthPage = () => {
       setPassword('');
       setOtp('');
       setOtpSent(false);
+      setShowPassword(false);
     } else {
       setMessage('Password reset failed: User not found.');
     }
@@ -170,7 +174,12 @@ const AuthPage = () => {
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <div className="password-input-wrapper">
+                <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
             <button type="submit" className="btn-auth-submit">Log In</button>
             <p className="auth-toggle">
@@ -197,7 +206,12 @@ const AuthPage = () => {
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <div className="password-input-wrapper">
+                <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
             <button type="submit" className="btn-auth-submit">Register</button>
             <p className="auth-toggle">
@@ -227,7 +241,12 @@ const AuthPage = () => {
             </div>
             <div className="form-group">
               <label>New Password</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <div className="password-input-wrapper">
+                <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
             <button type="submit" className="btn-auth-submit">Reset Password</button>
           </form>
